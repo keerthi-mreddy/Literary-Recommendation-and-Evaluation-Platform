@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block body %}
+
+
+<center>
+    <div class="form-container">
+        <p class="title">Welcome back</p>
+        <form class="login_form" method="post" >
+            <input type="email" class="input_form" placeholder="Email">
+            <input type="password" class="input_form" placeholder="Password">
+            <input type="submit" class="form-btn" value="Login">
+        </form>
+        <center>
+            <p class="sign-up-label">
+                Don't have an account? <span class="sign-up-link">Sign up</span>
+            </p>
+        </center>
+    </div>
+</center>
+
+
+
+{% endblock body %}

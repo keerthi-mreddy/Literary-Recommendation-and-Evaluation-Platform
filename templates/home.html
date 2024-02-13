@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <center><h1 style="font-size: 40px;"> Our Handpicks</h1></center>
+            </div>
+        </div>
+
+        {% for tuple in range(B_N|length) %}
+            <div class="col-md-3" style="margin-top: 30px;">
+                <div class="card">
+                    <img class="card-img-top" src="{{ B_I[tuple] }}">
+                    <div class="card-body">
+                        <p class="card-title">{{ B_N[tuple] }}</p>
+                        <h4 class="card-subtitle">{{ B_A[tuple] }}</h4>
+                        <p class="card-text">Votes - {{ B_V[tuple] }}</p>
+                        <p class="card-text">Rating - {{ B_R[tuple] }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock body %}
