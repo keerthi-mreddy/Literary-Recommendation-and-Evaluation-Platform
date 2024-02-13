@@ -1,11 +1,14 @@
-from flask import Flask,render_template,request, redirect, url_for, session
-from flask_mysqldb import MySQL
-import MySQLdb.cursors
+from flask import Flask, render_template, request, redirect, url_for, session
 import re
-import os
-import pandas as pd
-import numpy as np
+import bcrypt
 
+
+import numpy as np
+import pandas as pd
+
+
+from dotenv import load_dotenv
+import os
 
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -16,34 +19,70 @@ books = pd.read_pickle('dataset/books.pkl')
 similarity_scores = pd.read_pickle('dataset/similarity_scores.pkl')
 
 app = Flask(__name__)
- 
-app.secret_key = os.environ['SECRET_KEY']
 
-client = MongoClient(os.environ['MONGODB_URI'])
+load_dotenv()
+SECRET_KEY = os.environ['SECRET_KEY']
+MONGODB_URI = os.environ['MONGODB_URI']
+
+app.secret_key = SECRET_KEY
+
+client = MongoClient(MONGODB_URI)
 db = client.get_database('User_records')
 users_collection = db['users']
+
+try:
+    client.admin.command('ping')
+    print("👌👌Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 
 def is_mongo_connected():
     try:
         # Check if the connection is alive
         return client.is_mongoclient_alive()
     except Exception as e:
-        print(f"Error checking MongoDB connection: {e}")
-        return False
+        print("failed")
 
 @app.route('/')
-@app.route('/login')
-def home():
-    if is_mongo_connected():
-        print('Connected to MongoDB')
-        return render_template('login.html')
-    else:
-        return 'Not connected to MongoDB'
+@app.route('/login', methods=['GET','POST'])
+def login():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        password_encoded = password.encode('utf-8')
+
+        user = users_collection.find_one({'email':email})
+        if user and bcrypt.checkpw(password_encoded,user['password']):
+            session['username'] = user['username']
+            return redirect(url_for('index'))
+        else:
+            return 'Invalid login credentials'
+    return render_template('login.html')
     
 
-@app.route('/signin')
-def home1():
+@app.route('/signin', methods=['GET','POST'])
+def register():
+    if request.method == 'POST':
+        fullname = request.form['fullname']
+        email = request.form['email']
+        username = request.form['username']
+        password = request.form['password']
+        password_encoded = password.encode('utf-8')
+        hashed_password = bcrypt.hashpw(password_encoded, bcrypt.gensalt())
+
+        if not users_collection.find_one({'email': email}):
+            users_collection.insert_one({
+                'fullname': fullname, 
+                'username': username, 
+                'email' : email,
+                'password': hashed_password
+                })
+            return redirect(url_for('login'))
+        else:
+            return 'User already exists with the given email'
     return render_template('signin.html')
+
+
 
 @app.route('/handpicks')
 def index():
