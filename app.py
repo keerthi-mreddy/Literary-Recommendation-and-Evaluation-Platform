@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+
+
 import re
 import bcrypt
 
@@ -29,6 +31,8 @@ app.secret_key = SECRET_KEY
 client = MongoClient(MONGODB_URI)
 db = client.get_database('User_records')
 users_collection = db['users']
+reviews_collection = db['reviews']
+books_collection = db['books']
 
 try:
     client.admin.command('ping')
@@ -36,12 +40,10 @@ try:
 except Exception as e:
     print(e)
 
-def is_mongo_connected():
-    try:
-        # Check if the connection is alive
-        return client.is_mongoclient_alive()
-    except Exception as e:
-        print("failed")
+
+
+def current_user():
+    return session.get('username',None)
 
 @app.route('/')
 @app.route('/login', methods=['GET','POST'])
@@ -58,7 +60,76 @@ def login():
         else:
             return 'Invalid login credentials'
     return render_template('login.html')
+
+
+@app.route('/home')     
+def home():
+    user = current_user()
+    users1 = users_collection.find_one({'username':user})
+    if user:
+        return f'Logged in as {users1}'
+    else:
+        return 'Login failed'
     
+@app.route('/add-review', methods = ['GET','POST'])
+def addReview():
+    username = current_user()
+    # user_details = users_collection.find_one({'username':username})
+    if request.method == 'POST':
+        bookname = request.form['bookname']
+        author = request.form['author']
+        rating = request.form['user_rating']
+        review = request.form['review']
+
+        print(bookname,author,rating,review,'💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀')
+
+        userReviewField = reviews_collection.find_one({'username':username})
+        
+        if not userReviewField:
+            reviews_collection.insert_one({
+                'username' : username,
+                'reviews' : [{
+                    'bookname' : bookname,
+                    'author': author,
+                    'userrating' : int(rating),
+                    'review' : review
+                }]
+            })
+            userReviewField = reviews_collection.find_one({'username':username})
+        
+        else:
+            newObject = {
+                'bookname' : bookname,
+                'author': author,
+                'userrating' : int(rating),
+                'review' : review
+            }
+            reviews_array = userReviewField['reviews']
+            reviews_array.append(newObject)
+            reviews_collection.update_one(
+                {'username':username},
+                {'$set' : {
+                    'reviews' : reviews_array
+                }
+                })
+            print(reviews_collection.find_one({'username':username})['reviews'],'😒😒😒😒😒😒😒😒😒')
+            reviews = reviews_collection.find_one({'username':username})['reviews']
+        return redirect(url_for('showReviews'))
+    return render_template('review-form.html')
+
+
+@app.route('/show-reviews', methods= ['GET','POST'])
+def showReviews():
+    username = current_user()
+    if request.method == 'GET':
+        reviews_tuple = reviews_collection.find_one({'username':username})
+        reviews = reviews_tuple['reviews']
+        return render_template('show-reviews.html',username = username,reviews = reviews)
+    return 'Herl'
+
+            
+
+
 
 @app.route('/signin', methods=['GET','POST'])
 def register():

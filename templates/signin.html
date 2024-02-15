@@ -1,25 +1,368 @@
-{% extends 'base.html' %}
-{% block body %}
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-decoration: none;
+        }
 
 
-<center>
-    <div class="form-container_s">
-        <p class="title">Sign in</p>
-        <form class="login_form" method="post" action = "/signin">
-            <input type="text" class="input_form" placeholder="Name" name="fullname" required>
-            <input type ="text" class="input_form" placeholder="Username" name="username" required>
-            <input type="email" class="input_form" placeholder="Email" name="email" required>
-            <input type="password" class="input_form" placeholder="Password" name="password" required>
-            <input type="submit" class="form-btn" value="Sign in">
-        </form>
-        <center>
-            <p class="sign-up-label">
-                Already have an account? <span class="sign-up-link">Login</span>
-            </p>
-        </center>
-    </div>
-</center>
+        .max-width {
+            max-width: 1900px;
+            padding: 0 80px;
+            margin: auto;
+        }
+
+        .skills .skills-content,
+        .services .serv-content,
+        .about .about-content,
+        .contact .contact-content {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+
+        .navbar {
+            background-color: rgb(219, 246, 255);
+            position: fixed;
+            width: 100%;
+            z-index: 999;
+            padding: 15px 0;
+            /* font-family: sans-serif; */
+            transition: all 0.3s ease;
+            height: 70px;
+            box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.1), -40px -40px 60px #474747;
+        }
+
+        .navbar.sticky {
+            padding: 15px 0;
+            background: black;
+            box-shadow: 20px 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar .max-width {
+            display: flex;
+            align-items: center;
+        }
+
+        /* .navbar .logo a {
+            color: #fff;
+            font-size: 35px;
+            font-weight: 600;
+    
+        }
+
+        .navbar.sticky .logo a span {
+            color: #fff;
+        } */
+
+        .navbar .menu li {
+            list-style: circle;
+            display: inline-block;
+        }
+
+        .navbar .menu li a {
+            display: block;
+            color: #050000;
+            font-size: 35px;
+            font-weight: 500;
+            margin-left: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .menu li a:hover {
+            color: black;
+        }
+
+        .navbar.sticky .menu li a:hover {
+            color: #fff;
+        }
+
+        .menu-btn {
+            color: #080000;
+            font-size: 23px;
+            cursor: pointer;
+            display: none;
+        }
+
+        .navbar .left-components,
+        .navbar .right-components {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .left-components {
+            flex-grow: 1;
+            /* Occupy available space on the left */
+        }
+
+        .navbar .right-components {
+            margin-left: 20px;
+            /* Push the right components to the right */
+        }
+
+        .navbar .menu li {
+            list-style: none;
+            /* Remove default list styling */
+            display: inline-block;
+        }
+
+        .navbar .menu li a {
+            display: block;
+            color: #110000;
+            font-size: 25px;
+            font-weight: 500;
+            margin-left: 25px;
+            transition: color 0.3s ease;
+        }
+
+        .menu-btn:hover,
+        .right-components .menu-btn:hover {
+            color: #000;
+            /* Change the color for hover state if needed */
+            text-decoration: none;
+            /* Remove underlining for hover state */
+        }
+
+        .navbar .menu li a:hover,
+        .navbar .right-components li a:hover {
+            color: black;
+            text-decoration: none;
+            /* Remove underlining for hover state */
+        }
+
+        
+    .card {
+        background-color: #fde9e9;
+        color: #090909;
+        border: 1px solid #444;
+        border-radius: 20px;
+        margin-bottom: 30px;
+        align-items: center;
+    }
+
+    .card img {
+        /* max-width: 100%; */
+
+        width: 255px;
+        height: 300px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 10px;
+    }
+
+    .card-subtitle {
+        font-size: 20px;
+        margin-top: 10px;
+    }
+
+    .card-text {
+        font-size: 16px;
+    }
+
+    .input {
+        
+        border: none;
+        padding: 1rem;
+        border-radius: 1rem;
+        background: #fff4f4;
+        box-shadow: 10px 10px 70px #c5c5c5,
+             -0px -0px 60px #ffffff;
+        transition: 0.3s;
+        width: 600px;
+        height: 50px;
+        font-weight: 600;
+        font-size: medium;
+
+    }
+
+    .input:focus {
+        outline-color: #e8e8e8;
+        background: #e8e8e8;
+        box-shadow: inset 10px 10px 30px #c5c5c5,
+            inset -30px -30px 60px #ffffff;
+        transition: 0.3s;
+    }
+
+    .submit {
+        border: none;
+        padding: 1rem;
+        border-radius: 1rem;
+        background: #bee0ff;
+        box-shadow: 20px 20px 60px #e4c8ff,
+            -20px -20px 60px #ffffff;
+        transition: 0.3s;
+        width: 100px;
+        height: 50px;
+        margin-left: 20px;
+        font-weight: 600;
+        font-size: medium;
+    }
+
+    .submit:focus {
+        outline-color: #e8e8e8;
+        background: #62a6ff;
+        box-shadow: inset 20px 20px 60px #a2b8ff,
+            inset -20px -20px 60px #ffffff;
+        transition: 0.3s;
+    }
+
+    .form-container {
+        position: relative;
+        top: 200px;
+        width: 600px;
+        height: 450px;
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        padding: 20px 30px;
+    }
+
+    .form-container_s {
+        position: relative;
+        top: 200px;
+        width: 600px;
+        height: 600px;
+        background-color: #fff;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+        border-radius: 10px;
+        box-sizing: border-box;
+        padding: 20px 30px;
+    }
+
+    .title {
+        text-align: center;
+        font-family: "sans-serif";
+        margin: 10px 0 30px 0;
+        font-size: 28px;
+        font-weight: bold;
+    }
+
+    .login_form {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        margin-bottom: 15px;
+    }
+
+    .input_form {
+        border-radius: 20px;
+        border: 1px solid #c0c0c0;
+        outline: 0 !important;
+        box-sizing: border-box;
+        padding: 12px 15px;
+    }
+
+
+   
+
+    .form-btn {
+        width: 200;
+        align-self: center;
+        padding: 10px 15px;
+        font-family:  sans-serif;
+        border-radius: 20px;
+        border: 0 !important;
+        outline: 0 !important;
+        background: #ec4989;
+        color: white;
+        cursor: pointer;
+        box-shadow: 20px 20px 60px #ffbdd8,
+            -20px -20px 60px #ffffff;
+    }
+
+    .form-btn:active {
+        box-shadow: none;
+    }
+
+    .sign-up-label {
+        margin: 0;
+        font-size: 13px;
+        color: #747474;
+        font-family:  sans-serif;
+    }
+
+    .sign-up-link {
+        margin-left: 1px;
+        font-size: 15px;
+        text-decoration:solid;
+        text-decoration-color: #ec4989;
+        color: #ec4989;
+        cursor: pointer;
+        font-weight: 800;
+        font-family:  sans-serif;
+    }
 
 
 
-{% endblock body %}
+    
+        
+    </style>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typed.js/2.0.11/typed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/jquery.waypoints.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="max-width">
+            <div class="left-components">
+                <ul class="menu">
+                    <li><a href="/signin" class="menu-btn">Book review and recommendation system</a></li>
+                    
+                </ul>
+            </div>
+
+            <div class="right-components">
+                <ul class="menu">
+                    <li><a href="/login" class="menu-btn">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <center>
+        <div class="form-container_s">
+            <p class="title">Sign in</p>
+            <form class="login_form" method="post" action = "/signin">
+                <input type="text" class="input_form" placeholder="Name" name="fullname" required>
+                <input type ="text" class="input_form" placeholder="Username" name="username" required>
+                <input type="email" class="input_form" placeholder="Email" name="email" required>
+                <input type="password" class="input_form" placeholder="Password" name="password" required>
+                <input type="submit" class="form-btn" value="Sign in">
+            </form>
+            <center>
+                <p class="sign-up-label">
+                    Already have an account? <span class="sign-up-link">Login</span>
+                </p>
+            </center>
+        </div>
+    </center>
+
+
+
+</body>
+
+</html>
