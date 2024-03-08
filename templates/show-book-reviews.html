@@ -1,0 +1,154 @@
+{% extends 'base.html' %}
+{% block body %}
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Main Container for Clients Review -->
+
+    <div class="container">
+        <h2 style="font-size: 5rem; padding-top: 15vh; color:black"> Book Reviews for {{reviews[0].bookname}} </h2>
+
+        <!-- Clients Review Section -->
+        <div class="reviewSection">
+            {% for review in reviews %}
+            <div class="reviewItem">
+                <div class="top">
+                    <div class="clientImage">
+                        <!-- <img src="./client.png" alt=""> -->
+                        <span style="font-size: x-large">{{review.bookname}}</span>
+                    </div>
+                    <ul>
+                        <li><i class="fa-solid fa-star"></i></li>
+                        <li><i class="fa-solid fa-star"></i></li>
+                        <li><i class="fa-solid fa-star"></i></li>
+                        <li><i class="fa-regular fa-star"></i></li>
+                        <li><i class="fa-regular fa-star"></i></li>
+                    </ul>
+                </div>
+                <article>
+                    <p style="font-size: large; padding-left: 10px;"> <b style="font-size: large;">Author:</b> {{review.author}}</p>
+                    <p class="review" style="font-size: medium; padding-left: 10px;">{{review.review}}</p>
+                    <p style="font-size: x-large"> - {{review.username}}</p>
+                    <!-- <p>Jan 01, 2023</p> -->
+                </article>
+            </div>
+            {% endfor %}
+            <!-- Clients Review-1 Section Starts from Here  -->
+
+
+            <!-- Clients Review-2 Section Starts from Here  -->
+
+
+            <!-- Clients Review-3 Section Starts from Here  -->
+
+        </div>
+    </div>
+    <style>
+         .container {
+            color: rgb(253, 212, 218);
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            background-color: #ffffff;
+        }
+    
+    
+        .description {
+            text-align: center;
+            width: 43%;
+        }
+    
+        .clientImage {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+        }
+    
+        .clientImage span {
+            margin-left: 10px;
+        }
+    
+        .clientImage img {
+            width: 40px;
+        }
+    
+        .reviewSection {
+            padding: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-around;
+        }
+    
+        .reviewItem {
+            width: 500px;
+            padding: 10px;
+            margin: 1rem;
+            cursor: pointer;
+            border-radius: 10px;
+            border-color: rgb(26, 44, 44);
+            background-color: rgb(253, 212, 218);
+            color: #000000;
+            transition: all .2s linear;
+        }
+    
+        .reviewItem:hover {
+            transform: scale(1.01);
+            background-color: #ffffff;
+            border: 1px solid #10102a;
+            color: rgb(9, 9, 33);
+            box-shadow: 0 0px 5px 0px #cbc0c0;
+        }
+    
+        .top {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+        }
+    
+        .top ul {
+            display: flex;
+            list-style: none;
+        }
+    
+        .top ul li {
+            padding-left: 4px;
+        }
+    
+    
+        @media screen and (max-width:700px) {
+            .container {
+                height: auto;
+            }
+    
+            .description {
+                width: 90%;
+            }
+        }
+    
+        @media screen and (max-width:375px) {
+            .reviewSection {
+                padding: 0;
+            }
+    
+            .reviewItem {
+                width: 100%;
+            }
+    
+            .clientImage {
+                margin-bottom: 0.6rem;
+            }
+    
+            .top {
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+    </style>
+
+{% endblock body %}

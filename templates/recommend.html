@@ -11,15 +11,20 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <center><h1 class="text-white" style="font-size:50px; ">Recommend Books</h1></center>
-            <form action="/recommend_books" method="post">
+            <center><h1 class="text-white" style="font-size:50px; padding-top: 15vh;">Search for Books</h1></center>
+            <form style="padding-top: 5vh;" action="/recommend_books" method="post">
                 <center>
-                    <input type="text" name="user_input" class="input" placeholder="Enter a Valid Book Name">
-                    <input type="submit" class="submit">
+                    <input type="text" name="user_input" class="input" placeholder="Name your Interested Book">
+                    <input type="submit" class="submit" onclick="displayText()">
                 </center>
 
             </form>
         </div>
+        <!-- <script>
+            function displayText() {
+                document.getElementById("TextID").innerHTML = "These results are generated based on our Content based Filtering Model."
+            }
+        </script> -->
         <br>
         <br>
 
@@ -36,7 +41,7 @@
             </div>
         </div>
         {% endfor %}
-
+        <p1 id = "TextID"></p1>
 
 
         {% endif %}

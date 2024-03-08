@@ -1,26 +1,22 @@
-<html>
+{% extends 'base.html' %}
+{% block body %}
 
-<head>
-    <title>Reviews</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
         integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-</head>
-
-<body>
     <!-- Main Container for Clients Review -->
 
     <div class="container">
-        <h2> Book Reviews by you </h2>
+        <h2 style="font-size: 5rem; padding-top: 15vh; color:black"> Book Reviews by you </h2>
 
         <!-- Clients Review Section -->
         <div class="reviewSection">
             {% for review in reviews %}
-            <div class="reviewItem">
+            <div class="reviewItem" id = "book-review-container" >
                 <div class="top">
                     <div class="clientImage">
                         <!-- <img src="./client.png" alt=""> -->
-                        <span>{{review.bookname}}</span>
+                        <span style="font-size: x-large" >{{review.bookname}}</span>
                     </div>
                     <ul>
                         <li><i class="fa-solid fa-star"></i></li>
@@ -31,11 +27,14 @@
                     </ul>
                 </div>
                 <article>
-                    <p> <b>Author:</b> {{review.author}}</p>
-                    <p class="review">{{review.review}}</p>
-                    <a> - {{username}}</a>
+                    <p style="font-size: large; padding-left: 10px;"> <b style="font-size: large;">Author:</b> {{review.author}}</p>
+                    <p class="review" style="font-size: medium; padding-left: 10px;">{{review.review}}</p>
+                    <p style="font-size: x-large" > - {{username}}</p>
                     <!-- <p>Jan 01, 2023</p> -->
                 </article>
+               <center>
+                <a class = "book-review-button" href="{{ url_for('showBookReviews',bookname=review.bookname) }}">More Reviews for this book</a>
+               </center>
             </div>
             {% endfor %}
             <!-- Clients Review-1 Section Starts from Here  -->
@@ -49,17 +48,17 @@
         </div>
     </div>
 
-
-
-</body>
 <style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: sans-serif;
-    }
+    .book-review-button {
+  display: inline-block;  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #4CAF50;  color: white;
+  text-decoration: none;  cursor: pointer;  }
 
+.book-review-button:hover {
+  background-color: #3e8e41;  }
+    
     .container {
         color: rgb(253, 212, 218);
         display: flex;
@@ -69,12 +68,7 @@
         background-color: #ffffff;
     }
 
-    h2 {
-        font-size: 2rem;
-        margin-bottom: 1rem;
-        text-align: center;
-    }
-
+   
     .description {
         text-align: center;
         width: 43%;
@@ -177,5 +171,4 @@
         }
     }
 </style>
-
-</html>
+{% endblock body %}

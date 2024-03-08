@@ -8,6 +8,7 @@ import bcrypt
 import numpy as np
 import pandas as pd
 
+from datetime import datetime
 
 from dotenv import load_dotenv
 import os
@@ -40,7 +41,7 @@ try:
 except Exception as e:
     print(e)
 
-
+bookname = 'xy'
 
 def current_user():
     return session.get('username',None)
@@ -83,52 +84,48 @@ def addReview():
 
         print(bookname,author,rating,review,'💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀')
 
-        userReviewField = reviews_collection.find_one({'username':username})
+        userReviewField = reviews_collection.find_one({'username':username, 'bookname':bookname})
         
         if not userReviewField:
             reviews_collection.insert_one({
                 'username' : username,
-                'reviews' : [{
                     'bookname' : bookname,
                     'author': author,
                     'userrating' : int(rating),
-                    'review' : review
-                }]
+                    'review' : review,
+                    'date': str(datetime.utcnow())
             })
             userReviewField = reviews_collection.find_one({'username':username})
         
         else:
-            newObject = {
-                'bookname' : bookname,
-                'author': author,
-                'userrating' : int(rating),
-                'review' : review
-            }
-            reviews_array = userReviewField['reviews']
-            reviews_array.append(newObject)
+            
             reviews_collection.update_one(
                 {'username':username},
                 {'$set' : {
-                    'reviews' : reviews_array
+                    'review' : review,
+                    'date': str(datetime.utcnow())
                 }
                 })
-            print(reviews_collection.find_one({'username':username})['reviews'],'😒😒😒😒😒😒😒😒😒')
-            reviews = reviews_collection.find_one({'username':username})['reviews']
-        return redirect(url_for('showReviews'))
+            print(reviews_collection.find_one({'username':username}),'😒😒😒😒😒😒😒😒😒')
+        return redirect(url_for('showUserReviews'))
     return render_template('review-form.html')
 
 
-@app.route('/show-reviews', methods= ['GET','POST'])
-def showReviews():
+@app.route('/show-user-reviews', methods= ['GET','POST'])
+def showUserReviews():
     username = current_user()
     if request.method == 'GET':
-        reviews_tuple = reviews_collection.find_one({'username':username})
-        reviews = reviews_tuple['reviews']
-        return render_template('show-reviews.html',username = username,reviews = reviews)
+        reviews_tuple = reviews_collection.find({'username':username})
+        return render_template('show-user-reviews.html',username= username,bookname = bookname,reviews = reviews_tuple)
     return 'Herl'
 
             
-
+@app.route('/show-book-reviews/<string:bookname>', methods= ['GET','POST'])
+def showBookReviews(bookname):
+    username = current_user()
+    if request.method == 'GET':
+        reviews_tuple = reviews_collection.find({'bookname':bookname})
+        return render_template('show-book-reviews.html',username = username,reviews = reviews_tuple)
 
 
 @app.route('/signin', methods=['GET','POST'])
@@ -152,7 +149,7 @@ def register():
         else:
             return 'User already exists with the given email'
     return render_template('signin.html')
-
+import math
 
 
 @app.route('/handpicks')
@@ -162,7 +159,7 @@ def index():
                            B_A=list(popular_df['Book-Author'].values),
                            B_I=list(popular_df['Image-URL-M'].values),
                            B_V=list(popular_df['num_ratings'].values),
-                           B_R=list(map(lambda x:round(x,1),list(popular_df['avg_rating'].values)))
+                           B_R=list(map(lambda x: round(x/2,1),list(popular_df['avg_rating'].values)))
                            )
 
 @app.route('/recommend')
