@@ -16,19 +16,27 @@
                 <div class="top">
                     <div class="clientImage">
                         <!-- <img src="./client.png" alt=""> -->
-                        <span style="font-size: x-large">{{review.bookname}}</span>
+                        <center><span style="font-size: x-large">{{review.bookname}}</span> </center>
                     </div>
-                    <ul>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                    </ul>
+                    <br>
+                    
                 </div>
                 <article>
                     <p style="font-size: large; padding-left: 10px;"> <b style="font-size: large;">Author:</b> {{review.author}}</p>
                     <p class="review" style="font-size: medium; padding-left: 10px;">{{review.review}}</p>
+                    <ul id = "review-rating">
+                        {% for flag in review.rating %}
+                        {% if flag %}
+                        
+                        <li><i class="fa-solid fa-star"></i></li>
+                        {% else %}
+                        <li><i class="fa-regular fa-star"></i></li>
+                            
+                        {% endif %}
+                        {% endfor %}
+                        
+                        
+                    </ul>
                     <p style="font-size: x-large"> - {{review.username}}</p>
                     <!-- <p>Jan 01, 2023</p> -->
                 </article>
@@ -45,6 +53,13 @@
         </div>
     </div>
     <style>
+        #review-rating{
+            display: flex;
+            flex-direction: row;
+            list-style: none;
+            padding-left: 2vh;
+            font-size: 30px;
+        }
          .container {
             color: rgb(253, 212, 218);
             display: flex;
@@ -89,18 +104,18 @@
             cursor: pointer;
             border-radius: 10px;
             border-color: rgb(26, 44, 44);
-            background-color: rgb(253, 212, 218);
+            background-color: rgb(255, 226, 177);
             color: #000000;
             transition: all .2s linear;
         }
     
-        .reviewItem:hover {
+        /* .reviewItem:hover {
             transform: scale(1.01);
             background-color: #ffffff;
             border: 1px solid #10102a;
             color: rgb(9, 9, 33);
             box-shadow: 0 0px 5px 0px #cbc0c0;
-        }
+        } */
     
         .top {
             margin-bottom: 1rem;

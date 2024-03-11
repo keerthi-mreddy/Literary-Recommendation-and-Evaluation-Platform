@@ -12,30 +12,40 @@
         <!-- Clients Review Section -->
         <div class="reviewSection">
             {% for review in reviews %}
+            <a class = "book-review-button" href="{{ url_for('showBookReviews',bookname=review.bookname) }}">
             <div class="reviewItem" id = "book-review-container" >
                 <div class="top">
                     <div class="clientImage">
                         <!-- <img src="./client.png" alt=""> -->
                         <span style="font-size: x-large" >{{review.bookname}}</span>
                     </div>
-                    <ul>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-solid fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                        <li><i class="fa-regular fa-star"></i></li>
-                    </ul>
+                    
                 </div>
                 <article>
                     <p style="font-size: large; padding-left: 10px;"> <b style="font-size: large;">Author:</b> {{review.author}}</p>
                     <p class="review" style="font-size: medium; padding-left: 10px;">{{review.review}}</p>
+                    <ul id = "review-rating">
+                        {% for flag in review.rating %}
+                        {% if flag %}
+                        
+                        <li><i class="fa-solid fa-star"></i></li>
+                        {% else %}
+                        <li><i class="fa-regular fa-star"></i></li>
+                            
+                        {% endif %}
+                        {% endfor %}
+                        
+                        
+                    </ul>
                     <p style="font-size: x-large" > - {{username}}</p>
                     <!-- <p>Jan 01, 2023</p> -->
                 </article>
                <center>
-                <a class = "book-review-button" href="{{ url_for('showBookReviews',bookname=review.bookname) }}">More Reviews for this book</a>
+                More Reviews for this book
                </center>
             </div>
+            </a>
+
             {% endfor %}
             <!-- Clients Review-1 Section Starts from Here  -->
 
@@ -49,15 +59,23 @@
     </div>
 
 <style>
-    .book-review-button {
-  display: inline-block;  padding: 10px 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #4CAF50;  color: white;
-  text-decoration: none;  cursor: pointer;  }
+    #review-rating{
+            display: flex;
+            flex-direction: row;
+            list-style: none;
+            padding-left: 2vh;
+            font-size: 30px;
+        }
+    .book-review-button {   
+        text-decoration: none;
+        color: black;
+}
 
 .book-review-button:hover {
-  background-color: #3e8e41;  }
+  background-color: white;  
+  color: Black;
+  text-decoration: none;
+}
     
     .container {
         color: rgb(253, 212, 218);
@@ -114,6 +132,7 @@
         border: 1px solid #10102a;
         color: rgb(9, 9, 33);
         box-shadow: 0 0px 5px 0px #cbc0c0;
+        
     }
 
     .top {

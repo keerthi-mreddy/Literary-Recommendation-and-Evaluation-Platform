@@ -1,25 +1,35 @@
 {% extends 'base.html' %}
 {% block body %}
-
-    <div class="container">
+   
+    <div class="container" style="width: 1500px;">
         <div class="row">
             <div class="col-md-12">
-                <center><h1 style="font-size: 40px; padding-top: 10vh;"> Recommendations Based On your History</h1></center>
+                <center><h1 style="font-size: 40px; padding-top: 10vh;"> Recommendations Based On your Likings</h1></center>
             </div>
         </div>
 
         {% for tuple in range(B_N|length) %}
-            <div class="col-md-3" style="margin-top: 30px;">
-                <div class="card">
-                    <img class="card-img-top" src="{{ B_I[tuple] }}">
+        <a href="{{url_for('summary',id=tuple)}}">
+            <div class="col-md-3" style="margin-top: 30px;   ">
+                <div class="card" style="background-color: white; width: 320px; height:500px; box-shadow: 0 0 30px #aaa; border-radius: 0px;  ">
+                    <img class="card-img-top" style="width: 95%; border-radius: 0px; padding-left: 15px; padding-top: 10px; height: 70%;" src="{{ B_I[tuple] }} ">
                     <div class="card-body">
-                        <p class="card-title">{{ B_N[tuple] }}</p>
-                        <h4 class="card-subtitle">{{ B_A[tuple] }}</h4>
-                        <p class="card-text">Votes - {{ B_V[tuple] }}</p>
+                        <p1 class="card-title" style="font-size: medium;">{{ B_N[tuple] }}</p1>
+                        <br>
+                        <p1 class="card-subtitle">{{ B_A[tuple] }}</p1>
                         <p class="card-text">Rating - {{ (B_R[tuple]) }}</p>
+                        
                     </div>
                 </div>
             </div>
+        </a>
         {% endfor %}
     </div>
+    <style>
+        .card:hover {
+            transition:200ms;
+            transform: scale(1.1);
+            
+        }
+    </style>
 {% endblock body %}

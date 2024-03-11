@@ -16,7 +16,7 @@ import os
 from pymongo import MongoClient
 from werkzeug.security import generate_password_hash, check_password_hash
 
-popular_df = pd.read_pickle('dataset/popular.pkl')
+popular_df = pd.read_pickle('dataset/popular.pkl1')
 pt = pd.read_pickle('dataset/pt.pkl')
 books = pd.read_pickle('dataset/books.pkl')
 similarity_scores = pd.read_pickle('dataset/similarity_scores.pkl')
@@ -65,6 +65,7 @@ def login():
 
 @app.route('/home')     
 def home():
+    return render_template('index.html')
     user = current_user()
     users1 = users_collection.find_one({'username':user})
     if user:
@@ -82,7 +83,7 @@ def addReview():
         rating = request.form['user_rating']
         review = request.form['review']
 
-        print(bookname,author,rating,review,'💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀')
+        # print(bookname,author,rating,review,'💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀💀')
 
         userReviewField = reviews_collection.find_one({'username':username, 'bookname':bookname})
         
@@ -115,8 +116,18 @@ def addReview():
 def showUserReviews():
     username = current_user()
     if request.method == 'GET':
+        reviews_list = []
         reviews_tuple = reviews_collection.find({'username':username})
-        return render_template('show-user-reviews.html',username= username,bookname = bookname,reviews = reviews_tuple)
+        for review in reviews_tuple:
+            review_dict = dict(review)
+            rating = []
+            for i in range(1,review['userrating']+1):
+                rating.append(True)
+            for i in range(review['userrating']+1,6):
+                rating.append(False)
+            review_dict['rating'] = rating
+            reviews_list.append(review_dict)
+        return render_template('show-user-reviews.html',username= username,bookname = bookname,reviews = reviews_list)
     return 'Herl'
 
             
@@ -125,7 +136,17 @@ def showBookReviews(bookname):
     username = current_user()
     if request.method == 'GET':
         reviews_tuple = reviews_collection.find({'bookname':bookname})
-        return render_template('show-book-reviews.html',username = username,reviews = reviews_tuple)
+        reviews_list = []
+        for review in reviews_tuple:
+            review_dict = dict(review)
+            rating = []
+            for i in range(1,review['userrating']+1):
+                rating.append(True)
+            for i in range(review['userrating']+1,6):
+                rating.append(False)
+            review_dict['rating'] = rating
+            reviews_list.append(review_dict)
+        return render_template('show-book-reviews.html',username = username,reviews = reviews_list)
 
 
 @app.route('/signin', methods=['GET','POST'])
@@ -151,6 +172,12 @@ def register():
     return render_template('signin.html')
 import math
 
+@app.route('/summary/<int:id>', methods=['GET','POST'])
+def summary(id):
+        summary_text = popular_df['summary'].values[int(id)]
+        bookname = popular_df['Book-Title'].values[int(id)]
+        # print(summary_text)
+        return render_template('summary.html',summary_text = summary_text,bookname=bookname)
 
 @app.route('/handpicks')
 def index():
@@ -159,7 +186,8 @@ def index():
                            B_A=list(popular_df['Book-Author'].values),
                            B_I=list(popular_df['Image-URL-M'].values),
                            B_V=list(popular_df['num_ratings'].values),
-                           B_R=list(map(lambda x: round(x/2,1),list(popular_df['avg_rating'].values)))
+                           B_R=list(map(lambda x: round(x/2,1),list(popular_df['avg_rating'].values))),
+                           B_S=list(popular_df['summary'].values)
                            )
 
 @app.route('/recommend')
@@ -186,7 +214,7 @@ def recommend():
         if len(data) == 0:
             return render_template('recommend0.html')
 
-        print(data)
+        # print(data)
 
         return render_template('recommend.html',data=data)
     except:

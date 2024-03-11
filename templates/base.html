@@ -3,9 +3,11 @@
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
         integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
+
     <style>
         * {
+            font-family: 'Poppins';
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -139,182 +141,179 @@
             /* Remove underlining for hover state */
         }
 
-        
-    .card {
-        background-color: #fde9e9;
-        color: #090909;
-        border: 1px solid #444;
-        border-radius: 20px;
-        margin-bottom: 30px;
-        align-items: center;
-    }
 
-    .card img {
-        /* max-width: 100%; */
+        .card {
+            background-color: #fde9e9;
+            color: #090909;
+            border: 1px solid #444;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            align-items: center;
+        }
 
-        width: 255px;
-        height: 300px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
-    }
+        .card img {
+            /* max-width: 100%; */
 
-    .card-body {
-        padding: 20px;
-    }
+            width: 255px;
+            height: 300px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
 
-    .card-title {
-        font-size: 24px;
-        font-weight: bold;
-        margin-top: 10px;
-    }
+        .card-body {
+            padding: 20px;
+        }
 
-    .card-subtitle {
-        font-size: 20px;
-        margin-top: 10px;
-    }
+        .card-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
 
-    .card-text {
-        font-size: 16px;
-    }
+        .card-subtitle {
+            font-size: 20px;
+            margin-top: 10px;
+        }
 
-    .input {
-        
-        border: none;
-        padding: 1rem;
-        border-radius: 1rem;
-        background: #fff4f4;
-        box-shadow: 10px 10px 70px #c5c5c5,
-             -0px -0px 60px #ffffff;
-        transition: 0.3s;
-        width: 600px;
-        height: 50px;
-        font-weight: 600;
-        font-size: medium;
+        .card-text {
+            font-size: 16px;
+        }
 
-    }
+        .input {
 
-    .input:focus {
-        outline-color: #e8e8e8;
-        background: #e8e8e8;
-        box-shadow: inset 10px 10px 30px #c5c5c5,
-            inset -30px -30px 60px #ffffff;
-        transition: 0.3s;
-    }
+            border: none;
+            padding: 1rem;
+            border-radius: 1rem;
+            background: #fff4f4;
+            box-shadow: 10px 10px 70px #c5c5c5,
+                -0px -0px 60px #ffffff;
+            transition: 0.3s;
+            width: 600px;
+            height: 50px;
+            font-weight: 600;
+            font-size: medium;
 
-    .submit {
-        border: none;
-        padding: 1rem;
-        border-radius: 1rem;
-        background: #bee0ff;
-        box-shadow: 20px 20px 60px #e4c8ff,
-            -20px -20px 60px #ffffff;
-        transition: 0.3s;
-        width: 100px;
-        height: 50px;
-        margin-left: 20px;
-        font-weight: 600;
-        font-size: medium;
-    }
+        }
 
-    .submit:focus {
-        outline-color: #e8e8e8;
-        background: #62a6ff;
-        box-shadow: inset 20px 20px 60px #a2b8ff,
-            inset -20px -20px 60px #ffffff;
-        transition: 0.3s;
-    }
+        .input:focus {
+            outline-color: #e8e8e8;
+            background: #e8e8e8;
+            box-shadow: inset 10px 10px 30px #c5c5c5,
+                inset -30px -30px 60px #ffffff;
+            transition: 0.3s;
+        }
 
-    .form-container {
-        position: relative;
-        top: 200px;
-        width: 600px;
-        height: 450px;
-        background-color: #fff;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        border-radius: 10px;
-        box-sizing: border-box;
-        padding: 20px 30px;
-    }
+        .submit {
+            border: none;
+            padding: 1rem;
+            border-radius: 1rem;
+            background: #bee0ff;
+            box-shadow: 20px 20px 60px #e4c8ff,
+                -20px -20px 60px #ffffff;
+            transition: 0.3s;
+            width: 100px;
+            height: 50px;
+            margin-left: 20px;
+            font-weight: 600;
+            font-size: medium;
+        }
 
-    .form-container_s {
-        position: relative;
-        top: 200px;
-        width: 600px;
-        height: 500px;
-        background-color: #fff;
-        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        border-radius: 10px;
-        box-sizing: border-box;
-        padding: 20px 30px;
-    }
+        .submit:focus {
+            outline-color: #e8e8e8;
+            background: #62a6ff;
+            box-shadow: inset 20px 20px 60px #a2b8ff,
+                inset -20px -20px 60px #ffffff;
+            transition: 0.3s;
+        }
 
-    .title {
-        text-align: center;
-        font-family: "sans-serif";
-        margin: 10px 0 30px 0;
-        font-size: 28px;
-        font-weight: bold;
-    }
+        .form-container {
+            position: relative;
+            top: 200px;
+            width: 600px;
+            height: 450px;
+            background-color: #fff;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 20px 30px;
+        }
 
-    .login_form {
-        width: 80%;
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        margin-bottom: 15px;
-    }
+        .form-container_s {
+            position: relative;
+            top: 200px;
+            width: 600px;
+            height: 500px;
+            background-color: #fff;
+            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+            border-radius: 10px;
+            box-sizing: border-box;
+            padding: 20px 30px;
+        }
 
-    .input_form {
-        border-radius: 20px;
-        border: 1px solid #c0c0c0;
-        outline: 0 !important;
-        box-sizing: border-box;
-        padding: 12px 15px;
-    }
+        .title {
+            text-align: center;
+            font-family: "sans-serif";
+            margin: 10px 0 30px 0;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
+        .login_form {
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-bottom: 15px;
+        }
 
-   
-
-    .form-btn {
-        width: 200;
-        align-self: center;
-        padding: 10px 15px;
-        font-family:  sans-serif;
-        border-radius: 20px;
-        border: 0 !important;
-        outline: 0 !important;
-        background: #ec4989;
-        color: white;
-        cursor: pointer;
-        box-shadow: 20px 20px 60px #ffbdd8,
-            -20px -20px 60px #ffffff;
-    }
-
-    .form-btn:active {
-        box-shadow: none;
-    }
-
-    .sign-up-label {
-        margin: 0;
-        font-size: 13px;
-        color: #747474;
-        font-family:  sans-serif;
-    }
-
-    .sign-up-link {
-        margin-left: 1px;
-        font-size: 15px;
-        text-decoration:solid;
-        text-decoration-color: #ec4989;
-        color: #ec4989;
-        cursor: pointer;
-        font-weight: 800;
-        font-family:  sans-serif;
-    }
+        .input_form {
+            border-radius: 20px;
+            border: 1px solid #c0c0c0;
+            outline: 0 !important;
+            box-sizing: border-box;
+            padding: 12px 15px;
+        }
 
 
 
-    
+
+        .form-btn {
+            width: 200;
+            align-self: center;
+            padding: 10px 15px;
+            font-family: sans-serif;
+            border-radius: 20px;
+            border: 0 !important;
+            outline: 0 !important;
+            background: #ec4989;
+            color: white;
+            cursor: pointer;
+            box-shadow: 20px 20px 60px #ffbdd8,
+                -20px -20px 60px #ffffff;
+        }
+
+        .form-btn:active {
+            box-shadow: none;
+        }
+
+        .sign-up-label {
+            margin: 0;
+            font-size: 13px;
+            color: #747474;
+            font-family: sans-serif;
+        }
+
+        .sign-up-link {
+            margin-left: 1px;
+            font-size: 15px;
+            text-decoration: solid;
+            text-decoration-color: #ec4989;
+            color: #ec4989;
+            cursor: pointer;
+            font-weight: 800;
+            font-family: sans-serif;
+        }
+
         
     </style>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

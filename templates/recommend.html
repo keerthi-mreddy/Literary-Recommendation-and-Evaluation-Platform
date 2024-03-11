@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% block body %}
 <style>
+        .card:hover {
+            transition:200ms;
+            transform: scale(1.1);
+            
+        }
     
 </style>
 <br>
@@ -8,8 +13,8 @@
 <br>
 <br>
 
-<div class="container">
-    <div class="row">
+<div class="container" style="width: 1500px;">
+    <div class="row" >
         <div class="col-md-12">
             <center><h1 class="text-white" style="font-size:50px; padding-top: 15vh;">Search for Books</h1></center>
             <form style="padding-top: 5vh;" action="/recommend_books" method="post">
@@ -31,12 +36,14 @@
         {% if data %}
 
         {% for i in data %}
-        <div class="col-md-3" style="margin-top: 30px;">
-            <div class="card">
-                <img class="card-img-top" src="{{i[2]}}">
+        
+        <div class="col-md-3" style="margin-top: 30px;   ">
+            <div class="card" style="background-color: white; width: 320px; height:500px; box-shadow: 0 0 30px #aaa; border-radius: 0px;  ">
+                <img class="card-img-top" style="width: 95%; border-radius: 0px; padding-left: 15px; padding-top: 10px; height: 75%;" src="{{i[2]}} ">
                 <div class="card-body">
-                    <p class="card-title">{{ i[0] }}</p>
-                    <h4 class="card-subtitle">{{ i[1] }}</h4>
+                    <p1 class="card-title" style="font-size: medium;">{{i[0]}}</p1>
+                    <br>
+                    <p1 class="card-subtitle">{{ i[1] }}</p1>
                 </div>
             </div>
         </div>
